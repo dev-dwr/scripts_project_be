@@ -143,3 +143,12 @@ def does_user_applied(request, pk):
     offer = get_object_or_404(Offer, id=pk)
     applied_offer = offer.candidate_set.filter(user=user).exists()
     return Response(applied_offer, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_user_offers(request):
+    offer_args = {'user': request.user.id}
+    offers = Offer.objects.filter(**offer_args)
+    serializer = OfferSerializer(offers, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)

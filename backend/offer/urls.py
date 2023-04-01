@@ -11,4 +11,5 @@ urlpatterns = [
     path('offers/<str:pk>/apply', views.apply_for_the_offer, name='apply_offer'),
     path('offers/statistics/<str:title>', views.get_offer_statistics, name='offer_statistics'),
     path('current_user/offers', views.get_user_applied_offers, name='offer_applied_by_user'),
+    path('current_user/all_offers', views.get_user_offers, name='get_user_offers'),
 ]
