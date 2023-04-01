@@ -133,4 +133,13 @@ def get_user_applied_offers(request):
     filter_args = {'user_id': request.user.id}
     offers = Candidate.objects.filter(**filter_args)
     serializer = CandidateSerializer(offers, many=True)
-    return Response(serializer.data)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def does_user_applied(request, pk):
+    user = request.user
+    offer = get_object_or_404(Offer, id=pk)
+    applied_offer = offer.candidate_set.filter(user=user).exists()
+    return Response(applied_offer, status=status.HTTP_200_OK)
