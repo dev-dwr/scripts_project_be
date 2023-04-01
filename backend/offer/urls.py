@@ -8,5 +8,6 @@ urlpatterns = [
     path('offers/<str:pk>/update', views.update_existing_offer_by_pk, name='offer_update'),
     path('offers/<str:pk>/delete', views.delete_offer_by_pk, name='offer_delete'),
     path('offers/<str:pk>/apply', views.apply_for_the_offer, name='apply_offer'),
-    path('offers/statistics/<str:title>', views.get_offer_statistics, name='offer_statistics')
+    path('offers/statistics/<str:title>', views.get_offer_statistics, name='offer_statistics'),
+    path('current_user/offers', views.get_user_applied_offers, name='offer_applied_by_user'),
 ]
