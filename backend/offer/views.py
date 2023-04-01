@@ -152,3 +152,16 @@ def get_user_offers(request):
     offers = Offer.objects.filter(**offer_args)
     serializer = OfferSerializer(offers, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_candidates_applied_for_offer(request, pk):
+    user = request.user
+    offer = get_object_or_404(Offer, id=pk)
+    if offer.user != user:
+        return Response({'error': 'You do not have access to get candidates, because you are not the owner'},
+                        status=status.HTTP_403_FORBIDDEN)
+    candidates = offer.candidate_set.all()
+    serializer = CandidateSerializer(candidates, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
