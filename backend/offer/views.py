@@ -10,7 +10,7 @@ from .filters import OfferFilter
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 
-NUM_OF_ELEMENTS_PER_PAGE = 4
+NUM_OF_ELEMENTS_PER_PAGE = 2
 
 
 @api_view(['GET'])
@@ -65,8 +65,9 @@ def update_existing_offer_by_pk(request, pk):
 @api_view(['GET'])
 def get_offer_by_pk(_, pk):
     offer = get_object_or_404(Offer, id=pk)
+    num_candidates = offer.candidate_set.all().count()
     serializer = OfferSerializer(offer, many=False)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response({"offer": serializer.data, "num_of_candidates": num_candidates}, status=status.HTTP_200_OK)
 
 
 @api_view(['DELETE'])

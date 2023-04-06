@@ -20,7 +20,7 @@ class JobType(models.TextChoices):
 
 class Experience(models.TextChoices):
     NO_EXPERIENCE = 'No Experience'
-    ONE_YEAR = '1 Years'
+    ONE_YEAR = '1 Year'
     TWO_YEAR = '2 Years'
 
 
