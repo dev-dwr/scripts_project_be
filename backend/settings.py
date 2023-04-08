@@ -147,12 +147,9 @@ CORS_ALLOWED_ORIGINS = ['http://localhost:3000', 'http://127.0.0.1:3000', 'https
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-
-if sys.argv[1] != 'runserver':
-    STATIC_ROOT = os.path.join(BASE_DIR, "static")
-
-# STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 MEDIA_URL = '/media/'
 
@@ -170,6 +167,3 @@ AWS_S3_VERIFY = True
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-GDAL_LIBRARY_PATH = os.environ.get("GDAL_LIBRARY_PATH")
-GEOS_LIBRARY_PATH = os.environ.get("GEOS_LIBRARY_PATH")
