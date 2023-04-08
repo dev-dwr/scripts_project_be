@@ -1,1 +1,3 @@
 backend/backend/.env
+backend/static
+db.sqlite3

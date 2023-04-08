@@ -10,7 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 
 EXTENSION_INDEX = 1
-CV_FILE_SEPARATOR = "."
+CV_FILE_SEPARATOR = ""
 
 
 @api_view(['POST'])
