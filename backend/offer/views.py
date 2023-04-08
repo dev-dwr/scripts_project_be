@@ -9,6 +9,7 @@ from django.db.models import Avg, Min, Max, Count
 from .filters import OfferFilter
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth.models import User
 
 NUM_OF_ELEMENTS_PER_PAGE = 2
 
@@ -31,10 +32,11 @@ def get_all_offers(req):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def create_new_offer(request):
-    request.data["user"] = request.data
+    request.data["user"] = request.user
     offer_entry = request.data
-    job = Offer.objects.create(**offer_entry)
-    serializer = OfferSerializer(job, many=False)
+
+    offer = Offer.objects.create(**offer_entry)
+    serializer = OfferSerializer(offer, many=False)
     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
@@ -45,8 +47,7 @@ def update_existing_offer_by_pk(request, pk):
         old_offer.title = req.data['title']
         old_offer.industry = req.data['industry']
         old_offer.experience = req.data['experience']
-        old_offer.salary = req.data['month_salary,']
-        old_offer.positions = req.data['positions']
+        old_offer.salary = req.data['month_salary']
         old_offer.company = req.data['company']
         old_offer.description = req.data['description']
         old_offer.email = req.data['email']
@@ -91,8 +92,7 @@ def get_offer_statistics(_, title):
     offers = Offer.objects.filter(**args)
     check_valid_offer(offers, title)
     statistics = offers.aggregate(min_salary=Min('month_salary'), max_salary=Max('month_salary'),
-                                  total_offers=Count('title'),
-                                  avg_positions=Avg('positions'), avg_salary=Avg('month_salary'))
+                                  total_offers=Count('title'), avg_salary=Avg('month_salary'))
     return Response(statistics, status=status.HTTP_200_OK)
 
 

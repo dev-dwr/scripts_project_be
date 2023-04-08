@@ -87,8 +87,7 @@ def upload_user_cv(request):
         return file_name == ''
 
     user = request.user
-    cv = request.FILES['cv']
-
+    cv = request.FILES['resume']
     if file_not_found(cv):
         return send_error_response("Error occurred, please upload your CV", status.HTTP_400_BAD_REQUEST)
 

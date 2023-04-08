@@ -2,8 +2,8 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('offers/', views.get_all_offers, name='offers'),
-    path('offers/', views.create_new_offer, name='offer_newly_created'),
+    path('offers', views.get_all_offers, name='offers'),
+    path('offers/create', views.create_new_offer, name='offer_newly_created'),
     path('offers/<str:pk>', views.get_offer_by_pk, name='offer_by_pk'),
     path('offers/<str:pk>/applied', views.does_user_applied, name='user_applied_for_the_offer'),
     path('offers/<str:pk>/update', views.update_existing_offer_by_pk, name='offer_update'),
